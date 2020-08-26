@@ -6,13 +6,17 @@ import { UpdateResult, DeleteResult } from 'typeorm';
 
 @Injectable()
 export class ProductService {
-  
+
   constructor(
     @InjectRepository(Product) private ProductRepository: Repository<Product>
   ) { }
 
   async findAll(): Promise<Product[]> {
-    return await this.ProductRepository.find();
+    return await this.ProductRepository.find({
+      order: {
+        createdAt: -1,
+      }
+    });
   }
 
   async findById(id: number): Promise<Product> {
